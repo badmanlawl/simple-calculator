@@ -4,7 +4,7 @@ let firstNumber = 0;
 let secondNumber = 0;
 let firstInput = true; // Check for if the number on screen is the first input
 let operatorCalled = false; // Used for clearing the display after selecting an operator
-let operatorPrevCalled = false; // Used for continuous input of operator
+let operatorPrevCalled = false; // Used for continuous input of operators
 let equalCalled = false; // Used for continuous input of equal
 let selectedOperator = "";
 
@@ -22,7 +22,7 @@ const addNumber = (number) => {
     }
 
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(1);
     }
 
@@ -60,7 +60,7 @@ const selectOperator = (operator) => {
 }
 
 const setClearStatus = (status) => {
-    switch(status) {
+    switch (status) {
         case 0:
             clear.textContent = "AC"
             break;
@@ -74,15 +74,15 @@ const clearDisplay = () => {
     equalCalled = false;
 
     // All clear calculator
-    if(display.textContent == "0" && clear.textContent == "AC") {
+    if (display.textContent == "0" && clear.textContent == "AC") {
         // console.log("Calculator cleared")
         firstInput = true;
         firstNumber = 0;
         secondNumber = 0;
     }
-    
+
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(0);
     }
 
@@ -91,7 +91,7 @@ const clearDisplay = () => {
 
 const callAns = () => {
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(1);
     }
 
@@ -108,7 +108,7 @@ const computeEqual = () => {
         firstNumber = display.textContent;
     }
     else {
-        secondNumber = display.textContent;     
+        secondNumber = display.textContent;
     }
 
     switch (selectedOperator) {
@@ -123,7 +123,7 @@ const computeEqual = () => {
             break;
         case "÷":
             display.textContent = fixPrecision(parseFloat(firstNumber) / parseFloat(secondNumber));
-            break;          
+            break;
     }
 
     // Function for ANS
@@ -140,7 +140,7 @@ const computePercent = () => {
     equalCalled = false;
 
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(1);
     }
 
@@ -155,10 +155,10 @@ const addDot = () => {
     }
 
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(1);
     }
-    
+
     // Toggle on/off the dot
     if (!display.textContent.includes(".")) {
         display.textContent = display.textContent + ".";
@@ -176,10 +176,10 @@ const doPlusMinus = () => {
     }
 
     // Handling Clear/All Clear text display
-    if(!firstInput) {
+    if (!firstInput) {
         setClearStatus(1);
     }
-	
+
     // Toggle on/off the plus/minus
     if (display.textContent.charAt(0) == "-") {
         display.textContent = display.textContent.substr(1);;
@@ -201,22 +201,11 @@ const dot = document.querySelector("#dot");
 const plusminus = document.querySelector("#plusminus");
 
 // Adding click events to each element
-numbers.forEach(e => {
-    e.addEventListener("click", () => addNumber(e.textContent))
-})
-
-operators.forEach(e => {
-    e.addEventListener("click", () => selectOperator(e.textContent))
-})
-
+numbers.forEach(e => { e.addEventListener("click", () => addNumber(e.textContent)) })
+operators.forEach(e => { e.addEventListener("click", () => selectOperator(e.textContent)) })
 clear.addEventListener("click", () => clearDisplay(true))
-
 ans.addEventListener("click", () => callAns())
-
 equal.addEventListener("click", () => computeEqual())
-
 percent.addEventListener("click", () => computePercent())
-
 dot.addEventListener("click", () => addDot())
-
 plusminus.addEventListener("click", () => doPlusMinus())
