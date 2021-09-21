@@ -189,6 +189,23 @@ const doPlusMinus = () => {
     }
 }
 
+const keyPress = (key) => {
+    // Numbers
+    if (isFinite(key)) addNumber(key)
+
+    // Operators
+    if (key == "+" || key == "-" || key == "*" || key == "/") selectOperator(key)
+
+    // Equal
+    if (key == "Enter") computeEqual()
+
+    // Dot
+    if (key == ".") addDot()
+
+    // Clear
+    if (key == "Backspace" || key == "Escape") clearDisplay()
+}
+
 // Selecting all the elements
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
@@ -203,9 +220,13 @@ const plusminus = document.querySelector("#plusminus");
 // Adding click events to each element
 numbers.forEach(e => { e.addEventListener("click", () => addNumber(e.textContent)) })
 operators.forEach(e => { e.addEventListener("click", () => selectOperator(e.textContent)) })
-clear.addEventListener("click", () => clearDisplay(true))
+clear.addEventListener("click", () => clearDisplay())
 ans.addEventListener("click", () => callAns())
 equal.addEventListener("click", () => computeEqual())
 percent.addEventListener("click", () => computePercent())
 dot.addEventListener("click", () => addDot())
 plusminus.addEventListener("click", () => doPlusMinus())
+
+// Keyboard support
+document.addEventListener("keyup", (e) => keyPress(e.key))
+
