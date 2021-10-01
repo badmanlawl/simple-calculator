@@ -10,200 +10,200 @@ let selectedOperator = "";
 
 // Other functions
 const fixPrecision = (number) => {
-    return parseFloat(number.toFixed(12));
+	return parseFloat(number.toFixed(12));
 }
 
 // Calculator functions
 const addNumber = (number) => {
-    // Clearing the display after an input following an operators
-    if (operatorCalled) {
-        operatorCalled = false;
-        clearDisplay();
-    }
+	// Clearing the display after an input following an operators
+	if (operatorCalled) {
+		operatorCalled = false;
+		clearDisplay();
+	}
 
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(1);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(1);
+	}
 
-    // Used for continuous input of equal
-    equalCalled = false;
+	// Used for continuous input of equal
+	equalCalled = false;
 
-    // Handling zeros
-    if (Math.abs(display.textContent != 0) || display.textContent.includes(".")) {
-        if (display.textContent.match().length)
-            display.textContent += number;
-    }
-    else {
-        // Handling negative zero
-        if (display.textContent.charAt(0) == "-") {
-            display.textContent = -number;
-        }
-        else {
-            display.textContent = number;
-        }
-    }
+	// Handling zeros
+	if (Math.abs(display.textContent != 0) || display.textContent.includes(".")) {
+		if (display.textContent.match().length)
+			display.textContent += number;
+	}
+	else {
+		// Handling negative zero
+		if (display.textContent.charAt(0) == "-") {
+			display.textContent = -number;
+		}
+		else {
+			display.textContent = number;
+		}
+	}
 }
 
 const selectOperator = (operator) => {
-    // Allows for consecutive inputs of operators to quickly go over equations
-    if (operatorPrevCalled && !operatorCalled) {
-        computeEqual();
-    }
+	// Allows for consecutive inputs of operators to quickly go over equations
+	if (operatorPrevCalled && !operatorCalled) {
+		computeEqual();
+	}
 
-    operatorCalled = true;
-    operatorPrevCalled = true;
-    equalCalled = false;
-    firstInput = false;
-    firstNumber = display.textContent;
-    selectedOperator = operator;
+	operatorCalled = true;
+	operatorPrevCalled = true;
+	equalCalled = false;
+	firstInput = false;
+	firstNumber = display.textContent;
+	selectedOperator = operator;
 }
 
 const setClearStatus = (status) => {
-    switch (status) {
-        case 0:
-            clear.textContent = "AC"
-            break;
-        case 1:
-            clear.textContent = "C";
-    }
+	switch (status) {
+		case 0:
+			clear.textContent = "AC"
+			break;
+		case 1:
+			clear.textContent = "C";
+	}
 }
 
 const clearDisplay = () => {
-    operatorCalled = false;
-    equalCalled = false;
+	operatorCalled = false;
+	equalCalled = false;
 
-    // All clear calculator
-    if (display.textContent == "0" && clear.textContent == "AC") {
-        // console.log("Calculator cleared")
-        firstInput = true;
-        firstNumber = 0;
-        secondNumber = 0;
-    }
+	// All clear calculator
+	if (display.textContent == "0" && clear.textContent == "AC") {
+		// console.log("Calculator cleared")
+		firstInput = true;
+		firstNumber = 0;
+		secondNumber = 0;
+	}
 
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(0);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(0);
+	}
 
-    display.textContent = "0";
+	display.textContent = "0";
 }
 
 const callAns = () => {
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(1);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(1);
+	}
 
-    // Used for continuous input of equal
-    equalCalled = false;
+	// Used for continuous input of equal
+	equalCalled = false;
 
-    display.textContent = memoryAns;
+	display.textContent = memoryAns;
 }
 
 const computeEqual = () => {
-    // Used for continuous input of equal
-    if (equalCalled) {
-        operatorCalled = false;
-        firstNumber = display.textContent;
-    }
-    else {
-        secondNumber = display.textContent;
-    }
+	// Used for continuous input of equal
+	if (equalCalled) {
+		operatorCalled = false;
+		firstNumber = display.textContent;
+	}
+	else {
+		secondNumber = display.textContent;
+	}
 
-    switch (selectedOperator) {
-        case "+":
-            display.textContent = fixPrecision(parseFloat(firstNumber) + parseFloat(secondNumber));
-            break;
-        case "-":
-            display.textContent = fixPrecision(parseFloat(firstNumber) - parseFloat(secondNumber));
-            break;
-        case "x":
-            display.textContent = fixPrecision(parseFloat(firstNumber) * parseFloat(secondNumber));
-            break;
-        case "÷":
-            display.textContent = fixPrecision(parseFloat(firstNumber) / parseFloat(secondNumber));
-            break;
-    }
+	switch (selectedOperator) {
+		case "+":
+			display.textContent = fixPrecision(parseFloat(firstNumber) + parseFloat(secondNumber));
+			break;
+		case "-":
+			display.textContent = fixPrecision(parseFloat(firstNumber) - parseFloat(secondNumber));
+			break;
+		case "x":
+			display.textContent = fixPrecision(parseFloat(firstNumber) * parseFloat(secondNumber));
+			break;
+		case "÷":
+			display.textContent = fixPrecision(parseFloat(firstNumber) / parseFloat(secondNumber));
+			break;
+	}
 
-    // Function for ANS
-    memoryAns = display.textContent;
+	// Function for ANS
+	memoryAns = display.textContent;
 
-    operatorCalled = true;
-    operatorPrevCalled = false;
-    equalCalled = true;
+	operatorCalled = true;
+	operatorPrevCalled = false;
+	equalCalled = true;
 }
 
 const computePercent = () => {
-    // Don't clear the display after an input following an operator (Contrary to the other functions)
-    operatorCalled = false;
-    equalCalled = false;
+	// Don't clear the display after an input following an operator (Contrary to the other functions)
+	operatorCalled = false;
+	equalCalled = false;
 
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(1);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(1);
+	}
 
-    display.textContent /= 100;
+	display.textContent /= 100;
 }
 
 const addDot = () => {
-    // Clearing the display after an input after calling an operator
-    if (operatorCalled) {
-        operatorCalled = false;
-        clearDisplay();
-    }
+	// Clearing the display after an input after calling an operator
+	if (operatorCalled) {
+		operatorCalled = false;
+		clearDisplay();
+	}
 
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(1);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(1);
+	}
 
-    // Toggle on/off the dot
-    if (!display.textContent.includes(".")) {
-        display.textContent = display.textContent + ".";
-    }
-    else if (display.textContent.slice(-1) == ".") {
-        display.textContent = display.textContent.slice(0, -1);
-    }
+	// Toggle on/off the dot
+	if (!display.textContent.includes(".")) {
+		display.textContent = display.textContent + ".";
+	}
+	else if (display.textContent.slice(-1) == ".") {
+		display.textContent = display.textContent.slice(0, -1);
+	}
 }
 
 const doPlusMinus = () => {
-    // Clearing the display after an input after calling an operator
-    if (operatorCalled) {
-        operatorCalled = false;
-        clearDisplay();
-    }
+	// Clearing the display after an input after calling an operator
+	if (operatorCalled) {
+		operatorCalled = false;
+		clearDisplay();
+	}
 
-    // Handling Clear/All Clear text display
-    if (!firstInput) {
-        setClearStatus(1);
-    }
+	// Handling Clear/All Clear text display
+	if (!firstInput) {
+		setClearStatus(1);
+	}
 
-    // Toggle on/off the plus/minus
-    if (display.textContent.charAt(0) == "-") {
-        display.textContent = display.textContent.substr(1);;
-    }
-    else {
-        display.textContent = "-" + display.textContent;
-    }
+	// Toggle on/off the plus/minus
+	if (display.textContent.charAt(0) == "-") {
+		display.textContent = display.textContent.substr(1);;
+	}
+	else {
+		display.textContent = "-" + display.textContent;
+	}
 }
 
 const keyPress = (key) => {
-    // Numbers
-    if (isFinite(key)) addNumber(key)
+	// Numbers
+	if (isFinite(key)) addNumber(key)
 
-    // Operators
-    if (key == "+" || key == "-" || key == "*" || key == "/") selectOperator(key)
+	// Operators
+	if (key == "+" || key == "-" || key == "*" || key == "/") selectOperator(key)
 
-    // Equal
-    if (key == "Enter") computeEqual()
+	// Equal
+	if (key == "Enter") computeEqual()
 
-    // Dot
-    if (key == ".") addDot()
+	// Dot
+	if (key == ".") addDot()
 
-    // Clear
-    if (key == "Backspace" || key == "Escape") clearDisplay()
+	// Clear
+	if (key == "Backspace" || key == "Escape") clearDisplay()
 }
 
 // Selecting all the elements
